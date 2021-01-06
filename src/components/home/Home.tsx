@@ -10,10 +10,12 @@ import { logOut } from '../../services/auth.service';
 import './Home.scss';
 import { getStores } from '../../services/http.service';
 import { Store } from 'antd/lib/form/interface';
+import SearchField from '../shared/SearchField';
 export function Home() {
   const emptyStores: Store[] = [];
   const imagesList: (typeof import("*.png"))[] = [];
   const [stores, setStores] = useState(emptyStores);
+  const [originalStores, setOriginalStores] = useState(emptyStores);
   const [images, setImages] = useState(imagesList);
   const [error, setError] = useState('');
   const history = useHistory();
@@ -23,6 +25,7 @@ export function Home() {
       if(res.stores) {
         loadImages(res.stores);
         setStores(res.stores); 
+        setOriginalStores(res.stores); 
       } else {
         setError(res.message!!);
       } 
@@ -44,7 +47,7 @@ export function Home() {
     return (
       <div className="card-container" key={index}>
         <div className="card">
-          <img src={images[index].default} className="store-img" />
+          {images[index] && <img src={images[index].default} className="store-img" />}
         </div>
         <h3>{store.name}</h3>
         <p className="store-address">{store.address}</p>
@@ -63,11 +66,13 @@ export function Home() {
           <img src={logOutIcon} alt="logo de Logout" /><span > Salir</span>
         </div>
         <div className="container">
-            <h1>Tiendas</h1>
-            <h4>Escoge tu pizzería favorita</h4>
-            <div className="stores">
-              {error === '' ? loadStores(): error}
-            </div>
+          <h1>Tiendas</h1>
+          <h4>Escoge tu pizzería favorita</h4>
+          <SearchField elements={stores} originalElements={originalStores} setElements={setStores}/>
+          <div className="stores">
+            {error === '' ? loadStores(): error}
+          </div>
+          <br></br>
         </div>
         <footer>
           <img src={facebook} className="footer-icon"  alt="Facebook" />
