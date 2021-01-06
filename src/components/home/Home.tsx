@@ -10,9 +10,9 @@ import { logOut } from "../../services/auth.service";
 import "./Home.scss";
 import { getStores } from "../../services/http.service";
 import SearchField from "../shared/SearchField";
-import { Modal } from "antd";
 import { Store } from "../shared/models";
 import { motion } from "framer-motion";
+import ModalStore from "../shared/ModalStore";
 
 export function Home() {
   const emptyStores: Store[] = [];
@@ -79,32 +79,14 @@ export function Home() {
     setIsModalVisible(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalVisible(false);
-  };
-
   return (
     <div className="home">
-      <Modal
-        visible={isModalVisible}
-        onOk={handleCloseModal}
-        onCancel={handleCloseModal}
-        cancelButtonProps={{ style: { display: "none" } }}
-      >
-        {images[modalInfo.id - 1] && (
-          <img src={images[modalInfo.id - 1].default} className="modal-img" />
-        )}
-        <div className="modal-content">
-          <h2>{modalInfo.name}</h2>
-          <p>{modalInfo.description}</p>
-          <strong>Productos:</strong>
-          <ul>
-            {modalInfo.products.map((product) => {
-              return <li>{product.name}</li>;
-            })}
-          </ul>
-        </div>
-      </Modal>
+      <ModalStore
+        isModalVisible={isModalVisible}
+        images={images}
+        setIsModalVisible={setIsModalVisible}
+        modalInfo={modalInfo}
+      />
       <div className="home-image-section">
         <img src={logo} id="logo" alt="logo" />
         <img src={pizza} id="home-image" alt="pizza" />
