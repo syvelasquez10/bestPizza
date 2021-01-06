@@ -14,3 +14,9 @@ export const login = async (email: string, password: string): Promise<BackRespon
   })[0];
   return user ? {user} : { message: 'La combinación de usuario y contraseña son incorrectas'};
 };
+
+export const getStores = async (): Promise<BackResponse> => {
+  const mockJson = await getMockJson();
+  const stores = mockJson.stores;
+  return stores ? {stores} : { message: 'Ocurrio un problema cargando los datos'};
+};

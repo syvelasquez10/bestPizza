@@ -1,18 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import pizza from '../../assets/pizza.png';
 import logo from '../../assets/logo_white.png';
 import logoWhite from '../../assets/logo_all_white.png';
 import logOutIcon from '../../assets/log_out.png';
-import sbarro from '../../assets/sbarro.png';
 import facebook from '../../assets/facebook_icon.png';
 import instagram from '../../assets/instagram_icon.png';
 import { logOut } from '../../services/auth.service';
 import './Home.scss';
-
+import { getStores } from '../../services/http.service';
+import { Store } from 'antd/lib/form/interface';
 export function Home() {
-  
+  const emptyStores: Store[] = [];
+  const imagesList: (typeof import("*.png"))[] = [];
+  const [stores, setStores] = useState(emptyStores);
+  const [images, setImages] = useState(imagesList);
+  const [error, setError] = useState('');
   const history = useHistory();
+
+  useEffect(() => {
+    getStores().then( res => {
+      if(res.stores) {
+        loadImages(res.stores);
+        setStores(res.stores); 
+      } else {
+        setError(res.message!!);
+      } 
+    
+    });
+  },[]);
+
+  const loadImages = async (stores: Store[]) => {
+    const images: (typeof import("*.png"))[] = [];
+    for(let i = 0; i < stores.length; i++) {
+      images.push(await import(`../../assets/${stores[i].name}.png`))
+    }
+    console.log(images)
+    setImages(images);
+  };
+
+  const loadStores = () =>
+  stores.map((store, index) => {
+    return (
+      <div className="card-container" key={index}>
+        <div className="card">
+          <img src={images[index].default} className="store-img" />
+        </div>
+        <h3>{store.name}</h3>
+        <p className="store-address">{store.address}</p>
+      </div>
+    );
+  });
 
   return (
     <div className="home">
@@ -27,12 +65,8 @@ export function Home() {
         <div className="container">
             <h1>Tiendas</h1>
             <h4>Escoge tu pizzería favorita</h4>
-            <div className="card-container">
-              <div className="card">
-                <img src={sbarro} className="store-img" alt="pizzería sbarro logo" />
-              </div>
-              <h3>SBarro</h3>
-              <p className="store-address">Calle 79 #15 -32</p>
+            <div className="stores">
+              {error === '' ? loadStores(): error}
             </div>
         </div>
         <footer>

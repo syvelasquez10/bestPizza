@@ -25,5 +25,6 @@ export interface BackMockResponse {
 
 export interface BackResponse {
     user?: User;
+    stores?: Store[];
     message?: string;
 };
