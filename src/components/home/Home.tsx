@@ -12,6 +12,7 @@ import { getStores } from "../../services/http.service";
 import SearchField from "../shared/SearchField";
 import { Modal } from "antd";
 import { Store } from "../shared/models";
+import { motion } from "framer-motion";
 
 export function Home() {
   const emptyStores: Store[] = [];
@@ -62,7 +63,9 @@ export function Home() {
         >
           <div className="card">
             {images[index] && (
-              <img src={images[index].default} className="store-img" />
+              <motion.div whileHover={{ scale: 1.2 }}>
+                <img src={images[index].default} className="store-img" />{" "}
+              </motion.div>
             )}
           </div>
           <h3>{store.name}</h3>
