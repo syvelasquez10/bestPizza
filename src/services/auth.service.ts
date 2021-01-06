@@ -9,3 +9,7 @@ export const getActualUser = (): User => {
     const user = document.cookie.split('; ').find((row) => row.startsWith('user'))?.split('=')[1];
     return user ? JSON.parse(user) : undefined;
 };
+
+export const logOut = () => {
+    document.cookie = 'user=';
+};

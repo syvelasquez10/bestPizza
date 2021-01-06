@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Route, useHistory } from 'react-router-dom';
 import './App.scss';
+import { Home } from './components/home/Home';
 import { Login } from './components/login/Login';
 import { getActualUser } from './services/auth.service';
 
@@ -21,6 +22,7 @@ function App() {
         <Login/>
       </Route>
       <Route path="/home">
+        <Home />
       </Route>
     </div>
   );

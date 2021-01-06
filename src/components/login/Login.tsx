@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import './Login.scss';
 import { Button, Form, Input } from 'antd';
+import { useHistory } from 'react-router-dom';
 import pizza from '../../assets/pizza.png';
 import logo from '../../assets/logo.png';
 import usuario from '../../assets/ic_usuario.png';
@@ -8,7 +8,7 @@ import passwordVisible from '../../assets/ic_contrasena_visible.png';
 import password from '../../assets/ic_contrasena.png';
 import { login } from '../../services/http.service';
 import { storeUser } from '../../services/auth.service';
-import { useHistory } from 'react-router-dom';
+import './Login.scss';
 
 export function Login() {
   const [error, setError] = useState('');

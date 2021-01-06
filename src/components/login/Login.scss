@@ -23,7 +23,7 @@
 }
 
 .login-form-section {
-    flex-grow: 3;
+    width: 60%;
     min-height: 100vh;
     background-color: white;
     display: flex;
@@ -36,7 +36,7 @@
         margin-bottom: 0;
     }
     h4 {
-        color: rgb(138, 138, 138);
+        color: $gray;
         font-size: 20px;
         font-weight: 300;
         margin-bottom: 4vh;
@@ -72,10 +72,6 @@
         border-color: $primary;
         color: black;
     }
-}
-
-.error {
-    color: $error;
 }
 
 @media (max-width: 900px) {
