@@ -32,3 +32,7 @@ To run the test execute the following command:
 ```bash
 npm run test
 ```
+
+Process
+-------------
+If you want to know more about the process of creating this project check the issues. Each issue has a description of the functionalities developt on the project. And most of the commits on the master branch are related to one issue.
