@@ -9,15 +9,26 @@ import instagram from '../../assets/instagram_icon.png';
 import { logOut } from '../../services/auth.service';
 import './Home.scss';
 import { getStores } from '../../services/http.service';
-import { Store } from 'antd/lib/form/interface';
 import SearchField from '../shared/SearchField';
+import { Modal } from 'antd';
+import { Store } from '../shared/models';
+
 export function Home() {
   const emptyStores: Store[] = [];
+  const emptyStore: Store = {
+    id: 1,
+    name: '',
+    address: '',
+    description: '',
+    products: []
+  };
   const imagesList: (typeof import("*.png"))[] = [];
   const [stores, setStores] = useState(emptyStores);
   const [originalStores, setOriginalStores] = useState(emptyStores);
   const [images, setImages] = useState(imagesList);
   const [error, setError] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalInfo, setModalInfo] = useState(emptyStore);
   const history = useHistory();
 
   useEffect(() => {
@@ -45,7 +56,7 @@ export function Home() {
   const loadStores = () =>
   stores.map((store, index) => {
     return (
-      <div className="card-container" key={index}>
+      <div className="card-container" key={index} onClick={() => showModal(store)}>
         <div className="card">
           {images[index] && <img src={images[index].default} className="store-img" />}
         </div>
@@ -55,8 +66,30 @@ export function Home() {
     );
   });
 
+  const showModal = (store: Store) => {
+    setModalInfo(store);
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <div className="home">
+      <Modal visible={isModalVisible} onOk={handleCloseModal} onCancel={handleCloseModal} cancelButtonProps={{ style: { display: 'none' } }}>
+        {images[modalInfo.id-1] && <img src={images[modalInfo.id-1].default} className="modal-img" />}
+        <div className="modal-content">
+          <h2>{modalInfo.name}</h2>
+          <p>{modalInfo.description}</p>
+          <strong>Productos:</strong>
+          <ul>
+            {modalInfo.products.map(product => {
+              return (<li>{product.name}</li>);
+            })}
+          </ul>
+        </div>
+      </Modal>
       <div className="home-image-section">
           <img src={logo} id="logo" alt="logo" />
           <img src={pizza} id="home-image" alt="pizza" />

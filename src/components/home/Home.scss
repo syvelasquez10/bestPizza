@@ -81,6 +81,7 @@
         width: 28%;
         margin-right: 5%;
         display: inline-block;
+        cursor: pointer;
     }
     .store-img {
         width: 100%;
@@ -116,16 +117,39 @@
     }
 }
 
+.ant-modal-body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    h2 {
+
+    text-align: center;
+    }
+}
+
 
 @media (max-width: 900px) {
-    .login-image-section {
+    .home-image-section {
         display: none;
     }
-
-    .login-form-section {
+    .home-form-section {
+        width: 100%;
         .container {
             width: 90%;
             margin-left: 5%;
+        }
+    }
+}
+
+@media (max-width: 400px) {
+    .home-form-section {
+        padding-bottom: 20px;
+        .card-container {
+            margin-left: 2%;
+            width: 46%;
+            margin-right: 2%;
+            display: inline-block;
+            cursor: pointer;
         }
     }
 }

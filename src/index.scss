@@ -11,3 +11,8 @@ body {
 .error {
   color: $error;
 }
+
+.ant-btn-primary {
+    background: $primary !important;
+    border-color: $primary !important;
+}

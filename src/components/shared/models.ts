@@ -11,7 +11,7 @@ export interface Product {
 };
 
 export interface Store {
-    id: 1,
+    id: number;
     name: string;
     address: string;
     description: string;
