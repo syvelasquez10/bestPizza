@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Login.scss';
 import { Button, Form, Input } from 'antd';
 import pizza from '../../assets/pizza.png';
@@ -6,8 +6,27 @@ import logo from '../../assets/logo.png';
 import usuario from '../../assets/ic_usuario.png';
 import passwordVisible from '../../assets/ic_contrasena_visible.png';
 import password from '../../assets/ic_contrasena.png';
+import { login } from '../../services/http.service';
+import { storeUser } from '../../services/auth.service';
+import { useHistory } from 'react-router-dom';
 
 export function Login() {
+  const [error, setError] = useState('');
+  const [form] = Form.useForm();
+  const history = useHistory();
+
+  const onFinish = async (values: any) => {
+    const response = await login(values.email, values.password);
+    if(response.message) {
+      setError(response.message);
+    } else if (response.user) {
+      setError('');
+      storeUser(response.user);
+      form.resetFields();
+      history.push("/home");
+    }
+  };
+
   return (
     <div className="login">
         <div className="login-image-section">
@@ -19,9 +38,12 @@ export function Login() {
             <h1>Bienvenido</h1>
             <h4>A las mejores pizzas del país</h4>
             <Form
-            name="basic"
-            initialValues={{ remember: true }}
-            >
+              form={form}
+              name="basic"
+              scrollToFirstError
+              initialValues={{ remember: true }}
+              onFinish={onFinish}
+              >
                 <Form.Item
                     name="email"
                     rules={[{ required: true, message: 'Por favor ingrese un correo' }, {pattern: /\b[\w.-]+@[\w.-]+.\w{2,4}\b/, message: 'El valor ingresado no es un correo valido'}]}
@@ -46,6 +68,7 @@ export function Login() {
                       Iniciar Sesión
                     </Button>
                 </Form.Item>
+                <span className="error">{error}</span>
             </Form>
           </div>
         </div>

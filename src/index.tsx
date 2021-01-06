@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
 import 'antd/dist/antd.css';
+import { HashRouter } from 'react-router-dom';
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <HashRouter><App /></HashRouter>,
   document.getElementById('root')
 );

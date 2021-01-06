@@ -74,8 +74,19 @@
     }
 }
 
+.error {
+    color: $error;
+}
+
 @media (max-width: 900px) {
     .login-image-section {
         display: none;
+    }
+
+    .login-form-section {
+        .container {
+            width: 90%;
+            margin-left: 5%;
+        }
     }
 }
