@@ -30,7 +30,7 @@ The test were created using Enzyme.
 To run the test execute the following command:
 
 ```bash
-npm run test
+npm run test a
 ```
 
 Process
